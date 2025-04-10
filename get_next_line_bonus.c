@@ -6,7 +6,7 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:12 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/04/09 22:17:03 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:20:45 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,24 @@ void	*read_file(int fd, char *buffer)
 void	*get_before_nl(char *buffer)
 {
 	char	*line;
+	char	*newline_pos;
+	int		len;
 	int		i;
 
 	if (!buffer)
 		return (NULL);
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	line = malloc(i + (buffer[i] == '\n') + 1);
+	newline_pos = ft_strchr(buffer, '\n');
+	if (newline_pos)
+		len = newline_pos - buffer + 1;
+	else
+		len = ft_strlen(buffer);
+	line = malloc(len + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (buffer[i] && i < len)
 	{
 		line[i] = buffer[i];
-		i++;
-	}
-	if (buffer[i] == '\n')
-	{
-		line[i] = '\n';
 		i++;
 	}
 	line[i] = '\0';
@@ -74,17 +73,18 @@ void	*get_before_nl(char *buffer)
 char	*get_after_nl(char *buffer)
 {
 	char	*newbuffer;
+	char	*newline_pos;
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
-	if (!buffer)
+	newline_pos = ft_strchr(buffer, '\n');
+	if (!newline_pos)
+	{
+		free(buffer);
 		return (NULL);
-	while (buffer[i] && buffer[i] != '\n')
-		i++;
-	if (buffer[i] == '\n')
-		i++;
+	}
+	i = (newline_pos - buffer) + 1;
+	j = 0;
 	newbuffer = malloc(ft_strlen(buffer) - i + 1);
 	if (!newbuffer)
 	{
@@ -103,7 +103,7 @@ char	*get_next_line(int fd)
 	static char	*buffer[FD_MAX];
 	char		*line;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || fd > FD_MAX)
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= FD_MAX)
 		return (NULL);
 	buffer[fd] = read_file(fd, buffer[fd]);
 	if (buffer[fd] != NULL && *buffer[fd])

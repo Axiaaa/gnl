@@ -6,7 +6,7 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:07 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/04/09 19:51:06 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:21:41 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
+char	*ft_strdup(const char *s);
 
 #endif // GET_NEXT_LINE_H

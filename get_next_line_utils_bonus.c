@@ -6,7 +6,7 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:11 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/04/09 21:42:43 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:19:14 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,8 @@
 
 void	free_2x(char *s1, char *s2)
 {
-	if (s1)
-	{
-		free(s1);
-		s1 = NULL;
-	}
-	if (s2)
-	{
-		free(s2);
-		s2 = NULL;
-	}
+	free(s1);
+	free(s2);
 }
 
 size_t	ft_strlen(const char *str)

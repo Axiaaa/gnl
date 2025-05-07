@@ -6,7 +6,7 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:12 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/04/10 18:20:33 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:45:50 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+/**
+Casting BUFFER_SIZE + 1 to ssize_t because with INT_MAX
+as BUFFER_SIZE is defined as an int, it overflows as a 32 bits
+value before being given to malloc which awaits a 64 values.
+*/
 void	*read_file(int fd, char *buffer)
 {
-	char	*temp;
-	int		n_byte;
+	char		*temp;
+	ssize_t		n_byte;
 
-	temp = malloc(BUFFER_SIZE + 1);
+	temp = malloc((ssize_t)BUFFER_SIZE + 1);
 	if (!temp)
 		return (NULL);
 	while (!ft_strchr(buffer, '\n'))
 	{
-		n_byte = read(fd, temp, BUFFER_SIZE);
+		n_byte = read(fd, temp, (ssize_t)BUFFER_SIZE);
 		if (n_byte == -1)
 			return (free_2x(buffer, temp), NULL);
 		if (n_byte == 0)
@@ -45,10 +50,10 @@ void	*read_file(int fd, char *buffer)
 
 void	*get_before_nl(char *buffer)
 {
-	char	*line;
-	char	*newline_pos;
-	int		len;
-	int		i;
+	char		*line;
+	char		*newline_pos;
+	size_t		len;
+	size_t		i;
 
 	if (!buffer)
 		return (NULL);
@@ -72,10 +77,10 @@ void	*get_before_nl(char *buffer)
 
 char	*get_after_nl(char *buffer)
 {
-	char	*newbuffer;
-	char	*newline_pos;
-	int		i;
-	int		j;
+	char		*newbuffer;
+	char		*newline_pos;
+	size_t		i;
+	size_t		j;
 
 	newline_pos = ft_strchr(buffer, '\n');
 	if (!newline_pos)
@@ -98,6 +103,13 @@ char	*get_after_nl(char *buffer)
 	return (newbuffer);
 }
 
+/**
+Could create my buffer with 
+static char buffer[BUFFER_SIZE]; 
+but i'd be stack dependent. I did prefer to 
+allocate so if BUFFER_SIZE > 8388608
+the program will still work
+*/
 char	*get_next_line(int fd)
 {
 	static char	*buffer = NULL;

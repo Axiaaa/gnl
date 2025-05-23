@@ -6,16 +6,17 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:11 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/04/10 18:21:09 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:00:32 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-void	free_2x(char *s1, char *s2)
+void	*free_2x(char *s1, char *s2)
 {
 	free(s1);
 	free(s2);
+	return NULL;
 }
 
 size_t	ft_strlen(const char *str)

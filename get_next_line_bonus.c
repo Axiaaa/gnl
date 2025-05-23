@@ -6,13 +6,11 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:12 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/05/07 14:45:10 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:00:15 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 void	*read_file(int fd, char *buffer)
@@ -27,7 +25,7 @@ void	*read_file(int fd, char *buffer)
 	{
 		n_byte = read(fd, temp, (ssize_t)BUFFER_SIZE);
 		if (n_byte == -1)
-			return (free_2x(buffer, temp), NULL);
+			return (free_2x(buffer, temp));
 		if (n_byte == 0)
 			break ;
 		temp[n_byte] = '\0';

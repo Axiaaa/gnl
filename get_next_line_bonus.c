@@ -6,7 +6,7 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:12 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/05/23 18:00:15 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:00:09 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= FD_MAX)
-		return (NULL);
+		return (free_2x(buffer[fd], NULL));
 	buffer[fd] = read_file(fd, buffer[fd]);
 	if (buffer[fd] != NULL && *buffer[fd])
 	{

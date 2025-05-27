@@ -6,7 +6,7 @@
 /*   By: lcamerly <lcamerly@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:20:12 by lcamerly          #+#    #+#             */
-/*   Updated: 2025/05/23 17:59:37 by lcamerly         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:00:23 by lcamerly         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ static char buffer[BUFFER_SIZE];
 but i'd be stack dependent. I did prefer to 
 allocate so if BUFFER_SIZE > 8388608
 the program will still work
+
+Also if you don't want to read all the file, you 
+can call get_next_line() with -1
 */
 char	*get_next_line(int fd)
 {
@@ -114,7 +117,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= FD_MAX)
-		return (NULL);
+		return (free_2x(buffer, NULL));
 	buffer = read_file(fd, buffer);
 	if (buffer != NULL && *buffer)
 	{
